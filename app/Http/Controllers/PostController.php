@@ -36,7 +36,7 @@ class PostController extends Controller
         $post = Post::find($id);
         try {
             $this->throwWhenModelEmpty($post);
-            return PostResource::collection($post);
+            return new PostResource($post);
         } catch (Exception $e) {
             return $this->apiResponse($e->getMessage(), 404);
         }

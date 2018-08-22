@@ -33,7 +33,7 @@ class TagsController extends Controller
         $tag = Tag::find($id);
         try{
             $this->throwWhenModelEmpty($tag);
-            return TagResource::collection($tag);
+            return new TagResource($tag);
         }catch(Exception $e){
             return $this->apiResponse($e->getMessage(), 404);
         }

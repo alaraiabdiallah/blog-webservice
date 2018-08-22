@@ -34,7 +34,7 @@ class CategoryController extends Controller
         $category = Category::find($id);
         try {
             $this->throwWhenModelEmpty($category);
-            return CategoryResource::collection($category);
+            return new CategoryResource($category);
         } catch (Exception $e) {
             return $this->apiResponse($e->getMessage(), 404);
         }

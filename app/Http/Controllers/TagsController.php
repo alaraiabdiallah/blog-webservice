@@ -13,7 +13,8 @@ class TagsController extends Controller
     use Api;
 
     private $rules = [
-        'name' => "required"
+        'name' => "required|max:20",
+        'slug' => "required|alpha_dash|max:20",
     ];
 
     public function index()
@@ -67,9 +68,17 @@ class TagsController extends Controller
 
     private function params($request)
     {
-        $this->validate($request,$this->rules);
-
+        $rules = $this->getRules($request);
+        $this->validate($request, $rules);
         return $request->all();
+    }
+
+    private function getRules($request)
+    {
+        if ($request->isMethod('put')) {
+            $this->rules['slug'] = 'alpha_dash|max:20';
+        }
+        return $this->rules;
     }
 
 }

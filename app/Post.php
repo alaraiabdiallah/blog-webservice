@@ -3,15 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\Components\Model\Slug;
 class Post extends Model
 {
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+    use Slug;
+    
     protected $fillable = [
         'title','slug','content','published_at'
     ];
@@ -27,5 +24,11 @@ class Post extends Model
         return $this->hasMany('App\PostTag');
     }
 
+
+    public function setSlugAttribute($value)
+    {
+        $slug = $this->getSlug(strtolower($value));
+        $this->attributes['slug'] = $slug;
+    }
 
 }

@@ -3,23 +3,25 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\Components\Model\Slug;
 class Category extends Model
 {
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+    use Slug;
     protected $fillable = [
-        'name'
+        'name','slug'
     ];
 
 
     public function posts()
     {
         return $this->hasMany('App\PostCategory');
+    }
+
+    public function setSlugAttribute($value)
+    {
+        $slug = $this->getSlug(strtolower($value));
+        $this->attributes['slug'] = $slug;
     }
 
 

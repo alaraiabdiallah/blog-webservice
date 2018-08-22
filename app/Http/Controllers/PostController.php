@@ -15,7 +15,7 @@ class PostController extends Controller
 
     private $rules = [
         'title' => "required|max:100",
-        'slug' => "alpha_dash|max:100",
+        'slug' => "required|alpha_dash|max:100",
         'content' => "required"
     ];
 
@@ -49,7 +49,7 @@ class PostController extends Controller
         $post = Post::find($id);
         try {
             $this->throwWhenModelEmpty($post);
-            $Post->update($this->params($request));
+            $post->update($this->params($request));
             return new PostResource($post);
         } catch (Exception $e) {
             return $this->apiResponse($e->getMessage(), 404);
@@ -71,9 +71,17 @@ class PostController extends Controller
 
     private function params($request)
     {
-        $this->validate($request, $this->rules);
-        $params = $request->all();
-        return $params;
+        $rules = $this->getRules($request);
+        $this->validate($request, $rules);
+        return $request->all();
+    }
+
+    private function getRules($request)
+    {
+        if($request->isMethod('put')){
+            $this->rules['slug'] = 'alpha_dash|max:100'; 
+        }
+        return $this->rules;
     }
 
 }

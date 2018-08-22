@@ -17,6 +17,7 @@ class PostTagResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->tag->name,
+            'slug' => $this->tag->slug,
         ];
     }
 }

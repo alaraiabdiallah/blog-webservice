@@ -76,7 +76,10 @@ class TagsController extends Controller
     private function getRules($request)
     {
         if ($request->isMethod('put')) {
-            $this->rules['slug'] = 'alpha_dash|max:20';
+            $this->rules = [
+                'name' => "max:20",
+                'slug' => "alpha_dash|max:20",
+            ];
         }
         return $this->rules;
     }

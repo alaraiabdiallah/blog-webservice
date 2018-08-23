@@ -79,7 +79,10 @@ class PostController extends Controller
     private function getRules($request)
     {
         if($request->isMethod('put')){
-            $this->rules['slug'] = 'alpha_dash|max:100'; 
+            $this->rules = [
+                'title' => "max:100",
+                'slug' => "alpha_dash|max:100",
+            ];
         }
         return $this->rules;
     }

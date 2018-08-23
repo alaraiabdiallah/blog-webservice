@@ -33,7 +33,7 @@ class PostController extends Controller
 
     public function show($id)
     {
-        $post = Post::find($id);
+        $post = Post::with(['categories', 'tags'])->find($id);
         try {
             $this->throwWhenModelEmpty($post);
             return new PostResource($post);

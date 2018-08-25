@@ -16,7 +16,10 @@ trait Api{
 
     private function throwWhenModelEmpty($model)
     {
-        if (is_null($model))
+        if (is_null($model)){
             throw new Exception('DATA_SOURCE_NOT_FOUND');
+        }elseif($model->count() == 0){
+            throw new Exception('DATA_SOURCE_NOT_FOUND');
+        }
     }
 }

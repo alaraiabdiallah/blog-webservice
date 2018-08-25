@@ -5,6 +5,8 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\PostCategoryResource as PostCategory;
 use App\Http\Resources\PostTagResource as PostTag;
+use App\Http\Resources\CommentResource as Comment;
+use App\Http\Resources\PostImageResource as PostImage;
 class PostResource extends JsonResource
 {
     /**
@@ -24,7 +26,9 @@ class PostResource extends JsonResource
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'categories' => PostCategory::collection($this->whenLoaded('categories')),
-            'tags' => PostTag::collection($this->whenLoaded('tags'))
+            'tags' => PostTag::collection($this->whenLoaded('tags')),
+            'comments' => Comment::collection($this->whenLoaded('comments')),
+            'images' => PostImage::collection($this->whenLoaded('images')),
         ];
     }
 }

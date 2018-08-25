@@ -2,26 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Comment;
+use App\PostImage;
 use App\Post;
 use Exception;
 use Illuminate\Http\Request;
 use App\Components\Api;
-use App\Http\Resources\CommentResource;
+use App\Http\Resources\PostImageResource;
 
-class CommentController extends Controller
+class PostImageController extends Controller
 {
 
     use Api;
 
     private $rules = [
-        'content' => "required"
+        'url' => "required|url"
     ];
 
     public function index($post_id)
     {
-        $model = Comment::findByPostId($post_id)->paginate();
-        return CommentResource::collection($model);
+        $model = PostImage::findByPostId($post_id)->paginate();
+        return PostImageResource::collection($model);
     }
 
     public function store(Request $request, $post_id)
@@ -30,18 +30,18 @@ class CommentController extends Controller
         try {
             $this->throwWhenModelEmpty($post);
             $params = $this->params($request, ['post_id' => $post_id]);
-            return new CommentResource(Comment::create($params));
+            return new PostImageResource(PostImage::create($params));
         } catch (Exception $e) {
             return $this->apiResponse($e->getMessage(), 404);
         }
     }
 
-    public function show($post_id,$id)
+    public function show($post_id, $id)
     {
-        $comment = Comment::findByIdAndPostId($post_id, $id);
+        $image = PostImage::findByIdAndPostId($post_id, $id);
         try {
-            $this->throwWhenModelEmpty($comment);
-            return new CommentResource($comment);
+            $this->throwWhenModelEmpty($image);
+            return new PostImageResource($image);
         } catch (Exception $e) {
             return $this->apiResponse($e->getMessage(), 404);
         }
@@ -51,11 +51,11 @@ class CommentController extends Controller
     public function update(Request $request, $post_id, $id)
     {
 
-        $comment = Comment::findByIdAndPostId($post_id, $id);
+        $image = PostImage::findByIdAndPostId($post_id, $id);
         try {
-            $this->throwWhenModelEmpty($comment);
-            $comment->update($this->params($request, ['post_id' => $post_id]));
-            return new CommentResource($comment);
+            $this->throwWhenModelEmpty($image);
+            $image->update($this->params($request, ['post_id' => $post_id]));
+            return new PostImageResource($image);
         } catch (Exception $e) {
             return $this->apiResponse($e->getMessage(), 404);
         }
@@ -64,10 +64,10 @@ class CommentController extends Controller
 
     public function destroy($post_id, $id)
     {
-        $comment = Comment::findByIdAndPostId($post_id, $id);
+        $image = PostImage::findByIdAndPostId($post_id, $id);
         try {
-            $this->throwWhenModelEmpty($comment);
-            $comment->delete();
+            $this->throwWhenModelEmpty($image);
+            $image->delete();
             return $this->apiResponse('DELETE_SUCCESS');
         } catch (Exception $e) {
             return $this->apiResponse($e->getMessage(), 404);
@@ -76,10 +76,10 @@ class CommentController extends Controller
 
     public function destroy_all($post_id)
     {
-        $comment = Comment::findByPostId($post_id);
+        $image = PostImage::findByPostId($post_id);
         try {
-            $this->throwWhenModelEmpty($comment);
-            $comment->delete();
+            $this->throwWhenModelEmpty($image);
+            $image->delete();
             return $this->apiResponse('DELETE_SUCCESS');
         } catch (Exception $e) {
             return $this->apiResponse($e->getMessage(), 404);
@@ -91,12 +91,8 @@ class CommentController extends Controller
         $rules = $this->getRules($request);
         $this->validate($request, $rules);
         $params = [];
-        if ($request->isMethod('put')) {
-            $params = $request->only('content');
-        }else{
-            $params = $request->all();
-            $params['post_id'] = $addtional['post_id'];
-        }
+        $params = $request->all();
+        $params['post_id'] = $addtional['post_id'];
         return $params;
     }
 
@@ -104,7 +100,7 @@ class CommentController extends Controller
     {
         if ($request->isMethod('put')) {
             $this->rules = [
-                'content' => "required"
+                'content' => "url"
             ];
         }
         return $this->rules;

@@ -21,7 +21,7 @@ class PostController extends Controller
 
     public function index()
     {
-        $model = Post::with(['categories', 'tags'])->paginate();
+        $model = Post::with(['categories', 'tags','comments', 'images'])->paginate();
         return PostResource::collection($model);
     }
 
@@ -33,7 +33,7 @@ class PostController extends Controller
 
     public function show($id)
     {
-        $post = Post::with(['categories', 'tags'])->find($id);
+        $post = Post::with(['categories', 'tags', 'comments', 'images'])->find($id);
         try {
             $this->throwWhenModelEmpty($post);
             return new PostResource($post);

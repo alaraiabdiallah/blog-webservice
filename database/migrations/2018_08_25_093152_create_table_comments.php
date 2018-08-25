@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTablePostTags extends Migration
+class CreateTableComments extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateTablePostTags extends Migration
      */
     public function up()
     {
-        Schema::create('post_tags', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('post_id')->unsigned();
-            $table->integer('tag_id')->unsigned();
+            $table->text('content');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateTablePostTags extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('post_tags');
+        Schema::dropIfExists('comments');
     }
 }

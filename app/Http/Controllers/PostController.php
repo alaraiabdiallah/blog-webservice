@@ -19,9 +19,9 @@ class PostController extends Controller
         'content' => "required"
     ];
 
-    public function index()
+    public function index(Request $request)
     {
-        $model = Post::with(['categories', 'tags','comments', 'images'])->paginate();
+        $model = Post::mainQuery($request);
         return PostResource::collection($model);
     }
 
@@ -33,7 +33,7 @@ class PostController extends Controller
 
     public function show($id)
     {
-        $post = Post::with(['categories', 'tags', 'comments', 'images'])->find($id);
+        $post = Post::withQuery()->find($id);
         try {
             $this->throwWhenModelEmpty($post);
             return new PostResource($post);

@@ -3,16 +3,20 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Components\Model\Slug;
-class Post extends Model
+use App\Components\Model\{Slug, Filter, Cacheable};
+use App\Contracts\Model\Cacheable as CacheContract;
+use App\Contracts\Model\Filter as FilterContract;
+
+class Post extends Model implements CacheContract, FilterContract
 {
 
-    use Slug;
+    use Slug,Cacheable,Filter;
     
     protected $fillable = [
         'title','slug','content','published_at'
     ];
 
+    protected $cache_time = 3;
 
     public function categories()
     {
@@ -38,6 +42,11 @@ class Post extends Model
     {
         $slug = $this->getSlug(strtolower($value));
         $this->attributes['slug'] = $slug;
+    }
+
+    public function scopeWithQuery($query)
+    {
+        return $query->with(['categories', 'tags', 'comments', 'images']);
     }
 
     public function scopeMainQuery($query, $request)
@@ -74,27 +83,9 @@ class Post extends Model
     }
 
 
-    public function scopeWithQuery($query)
+    public function scopeCacheQuery($query)
     {
-        return $query->with(['categories', 'tags', 'comments', 'images']);
-    }
-
-    private function paginateAppends($result, $request)
-    {
-        $result->appends($request->except('page'));
-
-        return $result;
-    }
-
-    private function requestFilterOption($request, $filter_option)
-    {
-        if (is_null($filter_option)) {
-            $request = collect($request->all());
-        } else {
-            $request = $request->only($filter_option);
-        }
-
-        return $request;
+        return $query->withQuery()->orderBy('id','DESC')->get();
     }
 
 

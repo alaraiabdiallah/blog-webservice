@@ -93,6 +93,9 @@ $app->singleton(
 |
 */
 
+$app->register(Illuminate\Redis\RedisServiceProvider::class);
+$app->configure('database');
+
 $app->router->group([
     'namespace' => 'App\Http\Controllers',
 ], function ($router) {

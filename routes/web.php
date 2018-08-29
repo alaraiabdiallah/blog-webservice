@@ -15,4 +15,6 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+$router->get('/test', 'TestController@index');
+
 require_once("blog.php");

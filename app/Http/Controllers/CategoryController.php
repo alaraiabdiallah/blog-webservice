@@ -18,6 +18,11 @@ class CategoryController extends Controller
         'slug' => "required|alpha_dash|max:20",
     ];
 
+    public function __construct()
+    {
+        $this->middleware('jwtauth', ['except' => ['index', 'show']]);
+    }
+
     public function index()
     {
         return CategoryResource::collection(Category::paginate());

@@ -19,6 +19,11 @@ class PostController extends Controller
         'content' => "required"
     ];
 
+    public function __construct()
+    {
+        $this->middleware('jwtauth',['except' => ['index','show']]);
+    }
+
     public function index(Request $request)
     {
         $model = Post::mainQuery($request);

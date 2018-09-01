@@ -17,6 +17,11 @@ class PostTagController extends Controller
         'tag_id' => "required|exists:tags,id"
     ];
 
+    public function __construct()
+    {
+        $this->middleware('jwtauth', ['except' => ['index', 'show']]);
+    }
+
     public function index($post_id)
     {
         $model = PostTag::findByPostId($post_id)->get();

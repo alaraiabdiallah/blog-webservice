@@ -7,6 +7,13 @@ use Exception;
 trait Api{
 
 
+    private function tokenResponse($token)
+    {
+        return response()->json([
+            'token' => $token
+        ], 200);
+    } 
+
     private function apiResponse($message, $status = 200)
     {
         return response()->json([

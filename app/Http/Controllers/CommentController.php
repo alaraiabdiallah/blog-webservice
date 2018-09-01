@@ -18,6 +18,11 @@ class CommentController extends Controller
         'content' => "required"
     ];
 
+    public function __construct()
+    {
+        $this->middleware('jwtauth', ['except' => ['index', 'show']]);
+    }
+
     public function index($post_id)
     {
         $model = Comment::findByPostId($post_id)->paginate();

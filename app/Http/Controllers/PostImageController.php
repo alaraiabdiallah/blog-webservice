@@ -18,6 +18,11 @@ class PostImageController extends Controller
         'url' => "required|url"
     ];
 
+    public function __construct()
+    {
+        $this->middleware('jwtauth', ['except' => ['index', 'show']]);
+    }
+
     public function index($post_id)
     {
         $model = PostImage::findByPostId($post_id)->paginate();

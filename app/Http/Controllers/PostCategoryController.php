@@ -17,6 +17,11 @@ class PostCategoryController extends Controller
         'category_id' => "required|exists:categories,id"
     ];
 
+    public function __construct()
+    {
+        $this->middleware('jwtauth', ['except' => ['index', 'show']]);
+    }
+
     public function index($post_id)
     {
         $model = PostCategory::findByPostId($post_id)->get();

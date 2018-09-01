@@ -16,5 +16,8 @@ $router->get('/', function () use ($router) {
 });
 
 $router->get('/test', 'TestController@index');
+$router->get('/test/auth', 'TestController@authtest');
+
+$router->post('login', 'AuthController@authenticate');
 
 require_once("blog.php");

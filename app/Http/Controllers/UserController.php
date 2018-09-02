@@ -3,25 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\User as Model;
-use Exception;
 use Illuminate\Http\Request;
-use App\Components\Api;
 use App\Http\Resources\UserResource as Resource;
 use Illuminate\Support\Facades\Hash;
+use App\Abstracts\Controllers\ApiController;
 
 class UserController extends ApiController
 {
 
-    use Api;
-
-    private $rules = [
+    protected $rules = [
         'name' => "required",
         'email' => "required|email",
         'password' => "required|min:6|max:20",
     ];
 
-    protected $model;
-    protected $resource;
+    protected $model, $resource;
 
     public function __construct()
     {

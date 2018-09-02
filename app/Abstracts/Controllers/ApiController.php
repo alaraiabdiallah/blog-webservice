@@ -1,19 +1,23 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Abstracts\Controllers;
 
+use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\Request;
 use App\Components\Api;
 
-class ApiController extends Controller
+abstract class ApiController extends Controller
 {
+    abstract protected function params($request);
+    abstract protected function getRules($request);
 
     use Api;
 
     public function index()
     {
-        return $this->resource::collection($this->model->paginate());
+        $model = $this->model->paginate();
+        return $this->resource::collection($model);
     }
 
     public function store(Request $request)

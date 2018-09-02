@@ -5,7 +5,7 @@ $router->group(['prefix' => 'tags'], function () use ($router) {
     $router->get('/', "$controller@index");
     $router->post('/', "$controller@store");
     $router->get('/{id}', "$controller@show");
-    $router->put('/{id}', "$controller@update");
+    $router->patch('/{id}', "$controller@update");
     $router->delete('/{id}', "$controller@destroy");
 });
 
@@ -14,7 +14,7 @@ $router->group(['prefix' => 'categories'], function () use ($router) {
     $router->get('/', "$controller@index");
     $router->post('/', "$controller@store");
     $router->get('/{id}', "$controller@show");
-    $router->put('/{id}', "$controller@update");
+    $router->patch('/{id}', "$controller@update");
     $router->delete('/{id}', "$controller@destroy");
 });
 
@@ -23,7 +23,7 @@ $router->group(['prefix' => 'posts'], function () use ($router) {
     $router->get('/', "$controller@index");
     $router->post('/', "$controller@store");
     $router->get('/{id}', "$controller@show");
-    $router->put('/{id}', "$controller@update");
+    $router->patch('/{id}', "$controller@update");
     $router->delete('/{id}', "$controller@destroy");
 
     $router->group(['prefix' => '/{post_id}/categories'], function () use ($router) {
@@ -49,7 +49,7 @@ $router->group(['prefix' => 'posts'], function () use ($router) {
         $router->get('/', "$controller@index");
         $router->post('/', "$controller@store");
         $router->get('/{id}', "$controller@show");
-        $router->put('/{id}', "$controller@update");
+        $router->patch('/{id}', "$controller@update");
         $router->delete('/{id}', "$controller@destroy");
         $router->delete('/', "$controller@destroy_all");
     });
@@ -59,7 +59,7 @@ $router->group(['prefix' => 'posts'], function () use ($router) {
         $router->get('/', "$controller@index");
         $router->post('/', "$controller@store");
         $router->get('/{id}', "$controller@show");
-        $router->put('/{id}', "$controller@update");
+        $router->patch('/{id}', "$controller@update");
         $router->delete('/{id}', "$controller@destroy");
         $router->delete('/', "$controller@destroy_all");
     });

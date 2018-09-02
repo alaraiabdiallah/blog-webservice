@@ -103,7 +103,7 @@ class PostImageController extends Controller
 
     private function getRules($request)
     {
-        if ($request->isMethod('put')) {
+        if ($request->isMethod('patch')) {
             $this->rules = [
                 'content' => "url"
             ];

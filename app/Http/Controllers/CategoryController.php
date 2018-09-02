@@ -81,7 +81,7 @@ class CategoryController extends Controller
 
     private function getRules($request)
     {
-        if ($request->isMethod('put')) {
+        if ($request->isMethod('patch')) {
             $this->rules = [
                 'name' => "max:20",
                 'slug' => "alpha_dash|max:20",

@@ -20,4 +20,13 @@ $router->get('/test/auth', 'TestController@authtest');
 
 $router->post('login', 'AuthController@authenticate');
 
+$router->group(['prefix' => 'users'], function () use ($router) {
+    $controller = "UserController";
+    $router->get('/', "$controller@index");
+    $router->post('/', "$controller@store");
+    $router->get('/{id}', "$controller@show");
+    $router->patch('/{id}', "$controller@update");
+    $router->delete('/{id}', "$controller@destroy");
+});
+
 require_once("blog.php");

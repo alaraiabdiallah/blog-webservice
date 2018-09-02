@@ -96,7 +96,7 @@ class CommentController extends Controller
         $rules = $this->getRules($request);
         $this->validate($request, $rules);
         $params = [];
-        if ($request->isMethod('put')) {
+        if ($request->isMethod('patch')) {
             $params = $request->only('content');
         }else{
             $params = $request->all();
@@ -107,7 +107,7 @@ class CommentController extends Controller
 
     private function getRules($request)
     {
-        if ($request->isMethod('put')) {
+        if ($request->isMethod('patch')) {
             $this->rules = [
                 'content' => "required"
             ];
